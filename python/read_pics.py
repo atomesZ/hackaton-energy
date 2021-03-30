@@ -49,31 +49,9 @@ def get_pics_from_file(filename):
         nb_trames = nb_trames + 1
         tab_pics.append(pics)
         pics = read_double_tab(f_pic, info["nb_pics"])
-    print("Nb trames: " + str(nb_trames))
     f_pic.close()
     return tab_pics, info
 
-
-def get_dataset():
-    """
-    returns the dataset in a dict with key : name of the key
-    value: list of spikes
-    """
-    dataset = {}
-    os.chdir('../data/')
-
-    for filename in os.listdir():
-        list_of_spikes, info = get_pics_from_file(filename)
-
-        # we get the name of the key by removing "pics_" at the beginning and ".bin" at the end
-        key = filename[5:-4]
-
-        dataset[key] = list_of_spikes
-
-    return dataset
-
-def get_pics_from_loginmdp():
-    return get_pics_from_file('../tohack/pics_LOGINMDP.bin')[0]
 
 if __name__ == "__main__":
     pics_nokey, info = get_pics_from_file("../data/pics_NOKEY.bin")

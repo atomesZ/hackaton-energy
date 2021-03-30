@@ -70,8 +70,9 @@ def get_X_Y_vectorized_int(dataset: dict):
 def shuffle_X_Y(X: list, Y: list):
     length_data = len(X)
     assert length_data == len(Y)
-    
-    
+    X = np.array(X)
+    Y = np.array(Y)
+
     i_data = list(range(length_data))
 
     shuffle(i_data)

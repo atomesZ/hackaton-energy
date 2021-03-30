@@ -48,7 +48,7 @@ def get_X_Y_vectorized_int(dataset: dict):
     X = []
     Y = []
 
-    d_list = list(train_dataset)
+    d_list = list(dataset)
 
     for k in dataset:
         X += dataset[k]
@@ -59,9 +59,8 @@ def get_X_Y_vectorized_int(dataset: dict):
     
         temp[index_in_d_list] = 1
 
-        for i in range(len(dataset[k]):
-            Y += temp
-
+        for i in range(len(dataset[k])):
+            Y += [temp]
 
     assert len(X) == len(Y)
     return X, Y

@@ -3,3 +3,4 @@ numpy
 tensorflow
 jupyter
 sklearn
+keras

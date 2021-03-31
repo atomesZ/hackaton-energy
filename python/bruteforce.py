@@ -61,7 +61,7 @@ class ComputeThread(threading.Thread):
         print(f"Thread {self.threadID} done")
 
 dataset = get_dataset()
-loginmdp = get_pics_from_loginmdp()[:16]
+loginmdp = get_pics_from_loginmdp()
 loginmdp_len = len(loginmdp)
 
 decoded_keys = []

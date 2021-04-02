@@ -1,6 +1,7 @@
 import matplotlib.pyplot as plt
 
 from dataset_manager import *
+from termcolor import colored
 
 def trame_show(X, key, figure_nbr):
     """Afficher les 100eres trames"""
@@ -30,8 +31,24 @@ def trame_show_key(dataset, key):
     for i in range(len(d_list)):
         if (d_list[i] == key):
             trame_show(dataset.get(d_list[i]), d_list[i], 0)
+            
 
-def trame_show_result(dataset, trames: dict):
+def trame_show_only_result_sup_accuracy(res, accuracy, accur_lim):
+    out = ""
+    X_login_mdp, _ = get_pics_from_file(f"../tohack/pics_LOGINMDP.bin")
+    trames80 = {}
+    for index, key in enumerate(res):
+        if key not in []:
+            out += colored(key, 'red' if accuracy[key] >= accur_lim else 'grey') + " "
+            if accuracy[key] >= accur_lim:
+                if key not in trames80:
+                    trames80[key] = []
+                trames80[key].append(X_login_mdp[index])
+    return trames80
+            
+    
+def trame_show_result(dataset, accuracy, res, accur_lim):
+    trames = trame_show_only_result_sup_accuracy(res, accuracy, accur_lim)
     print(list(trames.keys()))
     d_list = list(dataset)
 

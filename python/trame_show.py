@@ -35,7 +35,7 @@ def trame_show_key(dataset, key):
 
 def trame_show_only_result_sup_accuracy(res, accuracy, accur_lim):
     #out = ""
-    X_login_mdp, _ = get_pics_from_file(f"../tohack/pics_LOGINMDP.bin")
+    X_login_mdp, _ = get_pics_from_file("../tohack/pics_LOGINMDP.bin")
     trames80 = {}
     for index, key in enumerate(res):
         if key not in []:

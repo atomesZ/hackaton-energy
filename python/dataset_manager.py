@@ -117,3 +117,42 @@ def filtre(train_dataset, test_dataset, nbr_trunc):
             arr.append(filtre_subtract(i, test_nokey, key, nbr_trunc))
         test_data2.update({key : arr})
     return train_data2, test_data2
+
+def trame_distance(t1, t2):
+    return np.linalg.norm(t1 - t2)
+
+def deduplicate(X_loginmdp, delta=0.77777):
+    X_loginmdp_dedup = []
+    X_loginmdp_len = len(X_loginmdp)
+    
+    range_start = None
+
+    for index, elm in enumerate(X_loginmdp):       
+        if index + 1 == X_loginmdp_len:
+            trames = X_loginmdp[range_start:index + 1]
+            pics = []
+            for i in range(17):
+                mean = np.mean([e[i] for e in trames])
+                pics.append(mean)
+
+            X_loginmdp_dedup.append(pics)
+
+            range_start = None
+        else:
+            dist = trame_distance(elm, X_loginmdp[index + 1])
+            if dist < delta and range_start is None:
+                range_start = index
+            elif dist >= delta and range_start is not None:
+                trames = X_loginmdp[range_start:index + 1]
+                pics = []
+                for i in range(17):
+                    mean = np.mean([e[i] for e in trames])
+                    pics.append(mean)
+
+                X_loginmdp_dedup.append(pics)
+
+                range_start = None
+            elif dist >= delta and range_start is None:
+                X_loginmdp_dedup.append(elm)
+
+    return X_loginmdp_dedup

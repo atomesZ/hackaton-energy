@@ -20,6 +20,8 @@ def get_dataset():
 
         #We get the name of the key by removing "pics_" at the beginning and ".bin" at the end
         key = filename[5:-4]
+        if key in "ABCDEFGHIJKLMNOPQRSTUVWXYZ":
+            key = key.lower()
 
         train_dataset[key] = list_of_spikes[:6000]
         test_dataset[key]= list_of_spikes[6000:]
@@ -83,6 +85,24 @@ def shuffle_X_Y(X: list, Y: list):
     
     return X_shuffled, Y_shuffled
 
+def shift_letter(train_dataset, test_dataset):
+    """Add SHIFT + LETTER to each dataset
+    Call with : shift_letter(train_dataset, test_dataset)
+    """
+    dataset = {**train_dataset, **test_dataset}
+    new_dictionary_train = {}
+    new_dictionary_test = {}
+    for key in "ABCDEFGHIJKLMNOPQRSTUVWXYZ":
+        arr_key = []
+        arr_shift = dataset.get("SHIFT")
+        arr_letter = dataset.get(key.lower())
+        for i in range(0, min(len(arr_shift), len(arr_letter))):
+            arr_key.append(np.amax([arr_shift[i], arr_letter[i]], axis=0))
+        new_dictionary_train[key] = arr_key[:6000]
+        new_dictionary_test[key] = arr_key[6000:]
+    train_dataset.update(new_dictionary_train)
+    test_dataset.update(new_dictionary_test)
+    return new_dictionary_train, new_dictionary_test
 
 def filtre_subtract(i, nokey, key, nbr_trunc):
     a = np.subtract(i, nokey)

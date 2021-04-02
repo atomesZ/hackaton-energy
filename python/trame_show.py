@@ -1,4 +1,5 @@
 import matplotlib.pyplot as plt
+
 from dataset_manager import *
 
 
@@ -32,3 +33,11 @@ def trame_show_key(key):
         if (d_list[i] == key):
             trame_show(train_dataset.get(d_list[i]), d_list[i], 0)
 
+def trame_show_result(trames: dict):
+    print(list(trames.keys()))
+
+    for key in trames:
+        trame_show_key('NOKEY')
+        trame_show_key(key)
+        trame_show(trames[key], f"{key} - LOGINMDP", 0)
+        print('===========================')

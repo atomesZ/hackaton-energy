@@ -82,3 +82,38 @@ def shuffle_X_Y(X: list, Y: list):
     Y_shuffled = Y[i_data]
     
     return X_shuffled, Y_shuffled
+
+
+def filtre_subtract(i, nokey, key, nbr_trunc):
+    a = np.subtract(i, nokey)
+    if not np.isnan(nbr_trunc):
+        for j in range(len(a)):
+            if a[j] <= nbr_trunc:
+                a[j] = 0
+    return a
+
+def filtre(train_dataset, test_dataset, nbr_trunc):
+    """Soustrait aux trames le NOKEY et applique un set à 0 aux valeurs en dessous de nbr_trunc"""
+    
+    d_list = list(test_dataset)
+    train_nokey = np.array(train_dataset.get('NOKEY')).mean(0)
+    test_nokey = np.array(test_dataset.get('NOKEY')).mean(0)
+
+    train_data2, test_data2 = {}, {}
+    for key in d_list:
+        #Ne modifie pas les trames de type NOKEY
+        if (key == "NOKEY"):
+            train_data2.update({key : train_dataset.get(key)})
+            test_data2.update({key : test_dataset.get(key)})
+            continue
+            
+        #Soustrait la moyenne des NOKEY au dataset
+        arr = []
+        for i in train_dataset.get(key):
+            arr.append(filtre_subtract(i, train_nokey, key, nbr_trunc))
+        train_data2.update({key : arr})
+        arr = []
+        for i in test_dataset.get(key):
+            arr.append(filtre_subtract(i, test_nokey, key, nbr_trunc))
+        test_data2.update({key : arr})
+    return train_data2, test_data2

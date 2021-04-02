@@ -12,20 +12,12 @@ def get_prediction_list(model):
 
     res = []
 
-    poor_progress_bar = 0
-    for i in range(len(x_pred) // 400 + 1):
-        print('#', end="")
-    print("")
-    for trame_pred in x_pred:
-        if poor_progress_bar % 400 == 0:
-            print('#', end="")
-        poor_progress_bar += 1
-        t = [np.array(trame_pred)]
-        prediction = model.predict(t)[0]
+    predictions = model.predict(x_pred)
+    
+    for prediction in predictions:
         if prediction != 'NOKEY':
             res.append(prediction)
-
-    print("")
+            
     return res
 
 

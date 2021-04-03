@@ -1,6 +1,7 @@
 import numpy as np
 import os
 
+from copy import deepcopy
 from random import shuffle
 
 from read_pics import get_pics_from_file
@@ -89,20 +90,20 @@ def shift_letter(train_dataset, test_dataset):
     """Add SHIFT + LETTER to each dataset
     Call with : shift_letter(train_dataset, test_dataset)
     """
-    dataset = {**train_dataset, **test_dataset}
-    new_dictionary_train = {}
-    new_dictionary_test = {}
+    dataset = train_dataset
+    for key, val in test_dataset.items():
+        dataset[key] += val
+    
+    arr_shift = dataset.get("SHIFT")
     for key in "ABCDEFGHIJKLMNOPQRSTUVWXYZ":
         arr_key = []
-        arr_shift = dataset.get("SHIFT")
         arr_letter = dataset.get(key.lower())
         for i in range(0, min(len(arr_shift), len(arr_letter))):
             arr_key.append(np.amax([arr_shift[i], arr_letter[i]], axis=0))
-        new_dictionary_train[key] = arr_key[:6000]
-        new_dictionary_test[key] = arr_key[6000:]
-    train_dataset.update(new_dictionary_train)
-    test_dataset.update(new_dictionary_test)
-    return new_dictionary_train, new_dictionary_test
+        train_dataset[key] = arr_key[:6000]
+        test_dataset[key] = arr_key[6000:]
+
+    return train_dataset, test_dataset
 
 def filtre_subtract(i, nokey, key, nbr_trunc):
     a = np.subtract(i, nokey)

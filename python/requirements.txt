@@ -1,9 +1,12 @@
 matplotlib
 numpy
 tensorflow
+Keras
 jupyter
 sklearn
-keras
-matplotlib
 tqdm
 termcolor
+adanet
+autokeras
+tqdm
+seqlearn

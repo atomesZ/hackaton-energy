@@ -57,9 +57,6 @@ if __name__ == "__main__":
     pics_nokey, info = get_pics_from_file("../data/pics_NOKEY.bin")
     pics_pad0, info = get_pics_from_file("../data/pics_0.bin")
 
-    datasets = get_dataset()
-    loginmdp_pics = get_pics_from_loginmdp()
-
     ######### Pics ############
     # NO KEY
     plt.figure(1)

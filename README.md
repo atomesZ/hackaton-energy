@@ -1,6 +1,6 @@
 # hackaton-energy
 ## Problem
-Challenge 1 : Localiser des compteurs sur le réseau électrique français à partir de leur consommation annuelle et des données disponibles en open data.
+Challenge 1 : Intercepter des ondes radio sur les capteurs d’énergies - Hacker le login et mot de passe
 
 
 ## Code
@@ -10,8 +10,10 @@ Challenge 1 : Localiser des compteurs sur le réseau électrique français à pa
 * See requirements in python/requirements.txt : `pip install -r python/requirements.txt`
 
 ### How to run
-* Ubuntu/Linux : ```bash jupyter notebook```
-* Windows : Install Pycharm or similar. In the console write : ```bash jupyter notebook```
+* Ubuntu/Linux : ```bash
+    $ jupyter notebook
+    ```
+* Windows : Install Pycharm or similar. In the console, write : `jupyter notebook`
 
 An internet window will launch itself.
 

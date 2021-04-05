@@ -19,8 +19,18 @@ Click then on "main.ipynb" file and click on the double arrow.
 
 ![Capture d’écran du 2021-04-05 09-33-31](https://user-images.githubusercontent.com/57793060/113549685-1d3b9380-95f2-11eb-933c-2c76010b3e10.png)
 
-### Misc
 
+### Misc
+Things we tried :
+* Keras : The main library we used to predict the result
+* Knn
+* Brute force
+* Kmeans
+* autokeras
+* adanet
+* seqlearn
+* GaussianNB, Decision Tree, Random Forest
+* Others : SVC, SGD
 
 ## Deliverables
 ### Slides

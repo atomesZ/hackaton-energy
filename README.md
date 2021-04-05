@@ -10,9 +10,7 @@ Challenge 1 : Intercepter des ondes radio sur les capteurs d’énergies - Hacke
 * See requirements in python/requirements.txt : `pip install -r python/requirements.txt`
 
 ### How to run
-* Ubuntu/Linux : ```bash
-    $ jupyter notebook
-    ```
+* Ubuntu/Linux : `jupyter notebook`
 * Windows : Install Pycharm or similar. In the console, write : `jupyter notebook`
 
 An internet window will launch itself.

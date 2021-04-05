@@ -36,7 +36,7 @@ Things we tried :
 
 ## Deliverables
 ### Slides
-![Powerpoint](https://github.com/atomesZ/hackaton-energy/blob/master/Les%20Chacaux%20tigr%C3%A9s-%20HackatonEnergy.pptx)
+* Présentation powerpoint : ![ici](https://github.com/atomesZ/hackaton-energy/blob/master/Les%20Chacaux%20tigr%C3%A9s-%20HackatonEnergy.pptx)
 
 ### Video
 LIEN A METTRE

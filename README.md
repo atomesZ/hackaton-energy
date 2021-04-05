@@ -23,9 +23,9 @@ Click then on "main.ipynb" file and click on the double arrow.
 ### Misc
 Things we tried :
 * Keras : The main library we used to predict the result
+* byHand : The strategy used to compute the login and password. The results are there too.
 * Knn
 * Brute force
-* Kmeans
 * autokeras
 * adanet
 * seqlearn

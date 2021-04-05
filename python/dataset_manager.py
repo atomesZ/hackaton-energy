@@ -2,7 +2,7 @@ import numpy as np
 import os
 
 from copy import deepcopy
-from random import shuffle
+from random import shuffle, randrange
 
 from read_pics import get_pics_from_file
 
@@ -103,7 +103,35 @@ def shift_letter(train_dataset, test_dataset):
         train_dataset[key] = arr_key[:6000]
         test_dataset[key] = arr_key[6000:]
 
-    return train_dataset, test_dataset
+
+def ctrl_alt_suppr(train_dataset, test_dataset):
+    """Add ALT, CTRL+ALT, CTRL+ALT+SHIFT to each dataset
+    Call with : shift_letter(train_dataset, test_dataset)
+    """
+    dataset = train_dataset
+    for key, val in test_dataset.items():
+        dataset[key] += val
+    
+    arr_nokey = dataset.get("NOKEY")
+    arr_suppr = dataset.get("SUPPR")
+    arr_ctrl = dataset.get("CTRL")
+    arr_alt, arr_ctrl_alt, arr_ctrl_alt_suppr = [], [], []
+    min_len = min(len(arr_nokey), len(arr_suppr), len(arr_ctrl))
+    for i in range(0, min_len):
+        arr_alt_i = np.copy(arr_nokey[i])
+        #randrange(3, 4)
+        arr_alt_i[3] = randrange(150, 225) / 100
+        arr_alt.append(arr_alt_i)
+    for i in range(0, min_len):
+        arr_ctrl_alt.append(np.amax([arr_alt[randrange(len(arr_alt))], arr_ctrl[i]], axis=0))
+        arr_ctrl_alt_suppr.append(np.amax([arr_alt[randrange(len(arr_alt))], arr_ctrl[randrange(len(arr_ctrl))], arr_suppr[i]], axis=0))
+    
+    train_dataset["ALT"] = arr_alt[:6000]
+    test_dataset["ALT"] = arr_alt[6000:]
+    train_dataset["CTRL+ALT"] = arr_ctrl_alt[:6000]
+    test_dataset["CTRL+ALT"] = arr_ctrl_alt[6000:]
+    train_dataset["CTRL+ALT+SUPPR"] = arr_ctrl_alt_suppr[:6000]
+    test_dataset["CTRL+ALT+SUPPR"] = arr_ctrl_alt_suppr[6000:]
 
 def filtre_subtract(i, nokey, key, nbr_trunc):
     a = np.subtract(i, nokey)

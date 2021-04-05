@@ -8,5 +8,4 @@ tqdm
 termcolor
 adanet
 autokeras
-tqdm
 seqlearn

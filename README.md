@@ -15,7 +15,7 @@ Challenge 1 : Localiser des compteurs sur le réseau électrique français à pa
 
 An internet window will launch itself.
 
-Click then on "main" and click on the double arrow.
+Click then on "main.ipynb" file and click on the double arrow.
 
 ![Capture d’écran du 2021-04-05 09-33-31](https://user-images.githubusercontent.com/57793060/113549685-1d3b9380-95f2-11eb-933c-2c76010b3e10.png)
 

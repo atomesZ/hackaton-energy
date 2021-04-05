@@ -267,7 +267,12 @@ def get_credentials(key_pressed: list):
     on_a_shift = False
     
     for k in sequence:
-        if len(k) == 1:
+        if k == "SHIFT":
+            on_a_shift = True
+        elif k == "NOKEY":
+            on_a_shift = False
+            
+        elif len(k) == 1:
             if not on_a_shift:
                 credentials += k.lower()
             else:

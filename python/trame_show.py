@@ -34,6 +34,7 @@ def trame_show_key(dataset, key):
             
 
 def trame_show_only_result_sup_accuracy(res, accuracy, accur_lim):
+    """Trouve les trames de caractères dont l'accuracy est supérieure à 'accur_lim' et qui sont présents dans le résultat"""
     #out = ""
     X_login_mdp, _ = get_pics_from_file("../tohack/pics_LOGINMDP.bin")
     trames80 = {}
@@ -48,6 +49,7 @@ def trame_show_only_result_sup_accuracy(res, accuracy, accur_lim):
             
     
 def trame_show_result(dataset, accuracy, res, accur_lim):
+    """Affiche les trames de caractères dont l'accuracy est supérieure à 'accur_lim' et qui sont présents dans le résultat"""
     trames = trame_show_only_result_sup_accuracy(res, accuracy, accur_lim)
     print(list(trames.keys()))
     d_list = list(dataset)

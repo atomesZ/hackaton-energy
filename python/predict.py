@@ -6,6 +6,7 @@ from read_pics import get_pics_from_file
 def get_prediction_list(model):
     """
     The model is like "model = LinearRegression()" (or other algorithms)
+    Prévoit/Estime les caractères du résultat grâce au modèle et supprime tous les 'NOKEY'.
     """
 
     x_pred, info = get_pics_from_file("../tohack/pics_LOGINMDP.bin")
@@ -22,6 +23,7 @@ def get_prediction_list(model):
 
 
 def get_creds(prediction_list):
+    """Récupère et affiche tous les caractères du résultat grâce à prediction_list"""
     for i_k in range(len(prediction_list)):
         if prediction_list[i_k] == 'CTRL' and i_k + 2 < len(prediction_list) and prediction_list[i_k + 2] == 'SUPPR':
             print('#####################')
@@ -30,6 +32,7 @@ def get_creds(prediction_list):
 def get_prediction_list_keras(model, d_list, pic="tohack/pics_LOGINMDP"):
     """
     The model is like "model = LinearRegression()" (or other algorithms)
+    Prévoit/Estime les caractères du résultat grâce au modèle
     """
 
     x_pred, info = get_pics_from_file(f"../{pic}.bin")
@@ -64,6 +67,7 @@ def get_prediction_list2_keras(model, d_list, pic="tohack/pics_LOGINMDP"):
     return res
             
 def compute_accuracy_keras(model, d_list, X_test, Y_test):
+    """Calcule la réelle précision de chaque caractère du modèle"""
     accuracy, accuracy_count = {}, {}
     for e in d_list:
         accuracy[e] = 0

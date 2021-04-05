@@ -39,7 +39,7 @@ Things we tried :
 * Powerpoint presentation : ![here](https://github.com/atomesZ/hackaton-energy/blob/master/Les%20Chacaux%20tigr%C3%A9s-%20HackatonEnergy.pptx)
 
 ### Video
-LIEN A METTRE
+* Video : ![here](https://youtu.be/lF6CX0tCue8)
 
 ## Authors
 - Cédric Farinazzo

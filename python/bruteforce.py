@@ -12,7 +12,9 @@ from read_pics import *
 NBTHREADS = multiprocessing.cpu_count() + 1
 
 def get_dataset():
+    """load the dataset"""
     dataset = {}
+    old = os.getcwd()
     os.chdir('../data/')
 
     for filename in os.listdir():
@@ -22,12 +24,15 @@ def get_dataset():
         key = filename[5:-4]
 
         dataset[key] = list_of_spikes
+    os.chdir(old)
     return dataset
 
 def get_pics_from_loginmdp():
+    """load loginmdp pics"""
     return get_pics_from_file("../tohack/pics_LOGINMDP.bin")[0]
 
 def trame_distance(t1, t2):
+    """Distance between 2 trames"""
     return numpy.linalg.norm(t1 - t2)
 
 class ComputeThread(threading.Thread):
@@ -42,6 +47,7 @@ class ComputeThread(threading.Thread):
         self.decoded_keys = []
 
     def run(self):
+        """Determine keys by comparing trames with the dataset trames"""
         print(f"Thread {self.threadID} running | {len(self.loginmdp_part)} trames")
         pbar.update(0)
 
@@ -60,40 +66,28 @@ class ComputeThread(threading.Thread):
 
         print(f"Thread {self.threadID} done")
 
-dataset = get_dataset()
-loginmdp = get_pics_from_loginmdp()
-loginmdp_len = len(loginmdp)
+if __name__ == "__main__":
+    dataset = get_dataset()
+    loginmdp = get_pics_from_loginmdp()
+    loginmdp_len = len(loginmdp)
 
-decoded_keys = []
+    decoded_keys = []
 
-with tqdm(total=loginmdp_len) as pbar:
-    #for mdp_trame in loginmdp:
-    #    min_key = (None, float('inf'))
-    #    for key, trames in dataset.items():
-    #        min_d = float('inf')
-    #        for trame in trames:
-    #            d = trame_distance(mdp_trame, trame)
-    #            if min_d > d:
-    #                min_d = d
-    #        if min_key[1] > min_d:
-    #            min_key = (key, min_d)
-    #    pbar.update(1)
-    #    decoded_keys.append(min_key[1])
+    with tqdm(total=loginmdp_len) as pbar:
+        threads = []
+        trames_split = numpy.array_split(loginmdp, NBTHREADS)
+        for i in range(NBTHREADS):
+            threads.append(ComputeThread(i, deepcopy(dataset), deepcopy(trames_split[i]), pbar))
 
-    threads = []
-    trames_split = numpy.array_split(loginmdp, NBTHREADS)
-    for i in range(NBTHREADS):
-        threads.append(ComputeThread(i, deepcopy(dataset), deepcopy(trames_split[i]), pbar))
+        for t in threads:
+            t.start()
+        for t in threads:
+            t.join()
 
-    for t in threads:
-        t.start()
-    for t in threads:
-        t.join()
+        for t in threads:
+            decoded_keys += t.decoded_keys
 
-    for t in threads:
-        decoded_keys += t.decoded_keys
+    print(decoded_keys)
 
-print(decoded_keys)
-
-with open('result_hackaton.txt', 'w+') as f:
-    f.write('\n'.join(decoded_keys))
+    with open('result_hackaton.txt', 'w+') as f:
+        f.write('\n'.join(decoded_keys))

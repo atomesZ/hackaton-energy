@@ -41,7 +41,7 @@ def get_X_Y(dataset: dict):
         Y += [k] * len(dataset[k])
 
 
-    assert len(X) == len(Y)        
+    assert len(X) == len(Y)
     return X, Y
 
 def get_X_Y_vectorized_int(dataset: dict):
@@ -59,7 +59,7 @@ def get_X_Y_vectorized_int(dataset: dict):
         temp = [0] * len(d_list)
 
         index_in_d_list = d_list.index(k)
-    
+
         temp[index_in_d_list] = 1
 
         for i in range(len(dataset[k])):
@@ -80,11 +80,11 @@ def shuffle_X_Y(X: list, Y: list):
     i_data = list(range(length_data))
 
     shuffle(i_data)
-    
-    
+
+
     X_shuffled = X[i_data]
     Y_shuffled = Y[i_data]
-    
+
     return X_shuffled, Y_shuffled
 
 def shift_letter(train_dataset, test_dataset):
@@ -94,7 +94,7 @@ def shift_letter(train_dataset, test_dataset):
     dataset = train_dataset
     for key, val in test_dataset.items():
         dataset[key] += val
-    
+
     arr_shift = dataset.get("SHIFT")
     for key in "ABCDEFGHIJKLMNOPQRSTUVWXYZ":
         arr_key = []
@@ -104,7 +104,6 @@ def shift_letter(train_dataset, test_dataset):
         train_dataset[key] = arr_key[:6000]
         test_dataset[key] = arr_key[6000:]
 
-
 def ctrl_alt_suppr(train_dataset, test_dataset):
     """Add ALT, CTRL+ALT, CTRL+ALT+SHIFT to each dataset
     Call with : shift_letter(train_dataset, test_dataset)
@@ -112,7 +111,7 @@ def ctrl_alt_suppr(train_dataset, test_dataset):
     dataset = train_dataset
     for key, val in test_dataset.items():
         dataset[key] += val
-    
+
     arr_nokey = dataset.get("NOKEY")
     arr_suppr = dataset.get("SUPPR")
     arr_ctrl = dataset.get("CTRL")
@@ -126,7 +125,7 @@ def ctrl_alt_suppr(train_dataset, test_dataset):
     for i in range(0, min_len):
         arr_ctrl_alt.append(np.amax([arr_alt[randrange(len(arr_alt))], arr_ctrl[i]], axis=0))
         arr_ctrl_alt_suppr.append(np.amax([arr_alt[randrange(len(arr_alt))], arr_ctrl[randrange(len(arr_ctrl))], arr_suppr[i]], axis=0))
-    
+
     train_dataset["ALT"] = arr_alt[:6000]
     test_dataset["ALT"] = arr_alt[6000:]
     train_dataset["CTRL+ALT"] = arr_ctrl_alt[:6000]
@@ -145,7 +144,7 @@ def filtre_subtract(i, nokey, key, nbr_trunc):
 
 def filtre(train_dataset, test_dataset, nbr_trunc):
     """Soustrait aux trames le NOKEY et applique un set à 0 aux valeurs en dessous de nbr_trunc"""
-    
+
     d_list = list(test_dataset)
     train_nokey = np.array(train_dataset.get('NOKEY')).mean(0)
     test_nokey = np.array(test_dataset.get('NOKEY')).mean(0)
@@ -157,7 +156,7 @@ def filtre(train_dataset, test_dataset, nbr_trunc):
             train_data2.update({key : train_dataset.get(key)})
             test_data2.update({key : test_dataset.get(key)})
             continue
-            
+
         #Soustrait la moyenne des NOKEY au dataset
         arr = []
         for i in train_dataset.get(key):
@@ -177,10 +176,10 @@ def deduplicate(X_loginmdp, delta=0.77777):
     """Deduplique les trames similaires et garde la moyenne. Se fait sur les TRAMES. Pour sur le résultat, voir combine_blocks_of_res"""
     X_loginmdp_dedup = []
     X_loginmdp_len = len(X_loginmdp)
-    
+
     range_start = None
 
-    for index, elm in enumerate(X_loginmdp):       
+    for index, elm in enumerate(X_loginmdp):
         if index + 1 == X_loginmdp_len:
             trames = X_loginmdp[range_start:index + 1]
             pics = []

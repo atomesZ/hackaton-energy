@@ -71,6 +71,7 @@ def get_X_Y_vectorized_int(dataset: dict):
 
 
 def shuffle_X_Y(X: list, Y: list):
+    """Shuffle the dataset"""
     length_data = len(X)
     assert length_data == len(Y)
     X = np.array(X)
@@ -134,6 +135,7 @@ def ctrl_alt_suppr(train_dataset, test_dataset):
     test_dataset["CTRL+ALT+SUPPR"] = arr_ctrl_alt_suppr[6000:]
 
 def filtre_subtract(i, nokey, key, nbr_trunc):
+    """Secondary filter, all peaks below nbr_trunc will be equal to 0"""
     a = np.subtract(i, nokey)
     if not np.isnan(nbr_trunc):
         for j in range(len(a)):
@@ -168,9 +170,11 @@ def filtre(train_dataset, test_dataset, nbr_trunc):
     return train_data2, test_data2
 
 def trame_distance(t1, t2):
+    """Calcule la distance entre deux trames"""
     return np.linalg.norm(t1 - t2)
 
 def deduplicate(X_loginmdp, delta=0.77777):
+    """Deduplique les trames similaires et garde la moyenne. Se fait sur les TRAMES. Pour sur le résultat, voir combine_blocks_of_res"""
     X_loginmdp_dedup = []
     X_loginmdp_len = len(X_loginmdp)
     
